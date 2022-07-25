@@ -6,7 +6,7 @@ import torch
 import os
 
 import fastai
-# from deoldify.visualize import *
+from deoldify.visualize import *
 from pathlib import Path
 import warnings
 
@@ -22,12 +22,30 @@ def setupTorch():
 
 def downloadAndSetupModels():
     print()
-    os.system("mkdir 'models'");
+    os.system("mkdir -r 'models'");
     os.system("wget https://data.deepai.org/deoldify/ColorizeVideo_gen.pth - O ./models/ColorizeVideo_gen.pth")
     os.system("wget https://media.githubusercontent.com/media/jantic/DeOldify/master/resource_images/watermark.png - O ./resource_images/watermark.png")
 
-# def initColorizer():
-#     colorizer = get_video_colorizer()
+def initColorizer():
+    print()
+
+def startColorize(input_path, render_factor=21):
+    colorizer = get_video_colorizer()
+    print()
+    source_url = '' 
+    render_factor = 21  
+    watermarked = True 
+
+    if input_path is not None and input_path != '':
+        print()
+        output_path = colorizer._colorize_from_path(Path(input_path), render_factor)
+        print("Video after colorized ->")
+        print(output_path)
+    # if source_url is not None and source_url !='':
+    #     video_path = colorizer.colorize_from_url(source_url, 'video.mp4', render_factor, watermarked=watermarked)
+    #     # show_video_in_notebook(video_path)
+    # else:
+    #     print('Provide a video url and try again.')
 
 def main():
     print("main")
@@ -35,6 +53,7 @@ def main():
     setupGPU()
     setupTorch()
     # downloadAndSetupModels()
+    startColorize("input2.mp4")
 
 
 if __name__ == "__main__":

@@ -55,6 +55,14 @@ def main():
     # downloadAndSetupModels()
     startColorize("input2.mp4")
 
+def virtualEnv():
+    # sudo apt install python3-venv 
+    # which python3.8
+    # /usr/bin/python3.10 -m venv venv 
+    # source venv/bin/activate 
+    # pip install -r requirements.txt
+
+
 
 if __name__ == "__main__":
     main()

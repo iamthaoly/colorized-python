@@ -58,7 +58,7 @@ def main():
     setupGPU()
     setupTorch()
     downloadAndSetupModels()
-    startColorize("input2.mp4")
+    startColorize("input3.mp4")
 
 def virtualEnv():
     print()

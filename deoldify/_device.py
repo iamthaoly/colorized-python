@@ -18,7 +18,7 @@ class _Device:
     def current(self):
         return self._current_device
 
-    def set(self, device: DeviceId):     
+    def set(self, device):     
         if device == DeviceId.CPU:
             os.environ['CUDA_VISIBLE_DEVICES']=''
         else:

@@ -22,9 +22,14 @@ def setupTorch():
 
 def downloadAndSetupModels():
     print()
-    os.system("mkdir -r 'models'");
-    os.system("wget https://data.deepai.org/deoldify/ColorizeVideo_gen.pth - O ./models/ColorizeVideo_gen.pth")
-    os.system("wget https://media.githubusercontent.com/media/jantic/DeOldify/master/resource_images/watermark.png - O ./resource_images/watermark.png")
+    print("Current dir:")
+    print(os.system("pwd"))
+    os.system("mkdir -p 'models'");
+
+    if not os.path.exists("./models/ColorizeVideo_gen.pth"):
+        print("Model file is not existed. Downloading...")
+        os.system("curl https://data.deepai.org/deoldify/ColorizeVideo_gen.pth -o ./models/ColorizeVideo_gen.pth")
+        os.system("curl https://media.githubusercontent.com/media/jantic/DeOldify/master/resource_images/watermark.png -o ./resource_images/watermark.png")
 
 def initColorizer():
     print()
@@ -52,16 +57,16 @@ def main():
     os.system("pwd")
     setupGPU()
     setupTorch()
-    # downloadAndSetupModels()
+    downloadAndSetupModels()
     startColorize("input2.mp4")
 
 def virtualEnv():
+    print()
     # sudo apt install python3-venv 
     # which python3.8
     # /usr/bin/python3.10 -m venv venv 
     # source venv/bin/activate 
     # pip install -r requirements.txt
-
 
 
 if __name__ == "__main__":

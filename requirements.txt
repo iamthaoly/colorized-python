@@ -17,5 +17,5 @@ spacy>=2.0.18
 fastprogress>=0.2.1
 pandas
 matplotlib
-pynvx>=1.0.0
+# pynvx>=1.0.0
 # fastai

@@ -9,6 +9,7 @@ import fastai
 from deoldify.visualize import *
 from pathlib import Path
 import warnings
+import argparse
 
 def setupGPU():
     # choices:  CPU, GPU0...GPU7
@@ -29,28 +30,28 @@ def downloadAndSetupModels():
     if not os.path.exists("./models/ColorizeVideo_gen.pth"):
         print("Model file is not existed. Downloading...")
         os.system("curl https://data.deepai.org/deoldify/ColorizeVideo_gen.pth -o ./models/ColorizeVideo_gen.pth")
-        os.system("curl https://media.githubusercontent.com/media/jantic/DeOldify/master/resource_images/watermark.png -o ./resource_images/watermark.png")
+        # os.system("curl https://media.githubusercontent.com/media/jantic/DeOldify/master/resource_images/watermark.png -o ./resource_images/watermark.png")
 
 def initColorizer():
     print()
 
-def startColorize(input_path, render_factor=21):
+def moveVideoToPath(init_path, output_path):
+    os.system("mv %s %s" % (init_path, output_path))
+    print("Done move %s to %s" % (init_path, output_path))
+
+def startColorize(input_paths, output_paths, render_factor=21):
     colorizer = get_video_colorizer()
     print()
-    source_url = '' 
-    render_factor = 21  
-    watermarked = True 
-
-    if input_path is not None and input_path != '':
-        print()
-        output_path = colorizer._colorize_from_path(Path(input_path), render_factor)
-        print("Video after colorized ->")
-        print(output_path)
-    # if source_url is not None and source_url !='':
-    #     video_path = colorizer.colorize_from_url(source_url, 'video.mp4', render_factor, watermarked=watermarked)
-    #     # show_video_in_notebook(video_path)
-    # else:
-    #     print('Provide a video url and try again.')
+    # render_factor = 21  
+    for i in range(0, len(input_paths)):
+        input_path = input_paths[i]
+        output_path = output_paths[i]
+        if input_path is not None and input_path != '':
+            print()
+            video_path = colorizer._colorize_from_path(Path(input_path), render_factor)
+            print("Video path after colorized ->")
+            print(video_path)
+            moveVideoToPath(video_path, output_path)
 
 def main():
     print("main")
@@ -60,14 +61,40 @@ def main():
     downloadAndSetupModels()
     startColorize("input3.mp4")
 
-def virtualEnv():
-    print()
-    # sudo apt install python3-venv 
-    # which python3.8
-    # /usr/bin/python3.10 -m venv venv 
-    # source venv/bin/activate 
-    # pip install -r requirements.txt
+def testParser():
+    DELIMETER = ";"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--output", help = "Array of input path")
+    parser.add_argument("-r", "--render", help = "Render factor")
+    parser.add_argument("-i", "--input", help = "Array of output path")
 
+    # Read arguments from command line
+    args = parser.parse_args()
+    
+    if args.output and args.input and args.render:
+        print("Raw input: % s" % args.input)
+        print("Raw output: % s" % args.output)
+        print("Render number: % s" % args.render)
 
+        inputs = str(args.input).split(DELIMETER)
+        outputs = str(args.output).split(DELIMETER)
+        render_factor = int(args.render)
+
+        print(inputs)
+        print(outputs)
+        print(render_factor)
+        
+        if (len(inputs) != len(outputs)):
+            print("ERROR: Input length != Output length.")
+            return
+        startColorize(inputs, outputs, render_factor)
+    else:
+        print("ERROR: Some arguments are empty. Please check again.")
+
+    
 if __name__ == "__main__":
-    main()
+    # main()
+    testParser()
+    # Arguments: [Input], [Output], Render factor.
+    # input: /mnt/D/Code/DeOldify/input3.mp4
+    # output: /mnt/D/Code/DeOldify/input3_color.mp4

@@ -36,7 +36,7 @@ def initColorizer():
     print()
 
 def moveVideoToPath(init_path, output_path):
-    os.system("mv %s %s" % (init_path, output_path))
+    os.system("mv \"%s\" \"%s\"" % (init_path, output_path))
     print("Done move %s to %s" % (init_path, output_path))
 
 def startColorize(input_paths, output_paths, render_factor=21):
@@ -47,6 +47,7 @@ def startColorize(input_paths, output_paths, render_factor=21):
         input_path = input_paths[i]
         output_path = output_paths[i]
         if input_path is not None and input_path != '':
+            print("Colorizing video at path: %s" % input_path)
             print()
             video_path = colorizer._colorize_from_path(Path(input_path), render_factor)
             print("Video path after colorized ->")
@@ -91,10 +92,10 @@ def testParser():
     else:
         print("ERROR: Some arguments are empty. Please check again.")
 
-    
 if __name__ == "__main__":
     # main()
-    testParser()
+    # testParser()
     # Arguments: [Input], [Output], Render factor.
-    # input: /mnt/D/Code/DeOldify/input3.mp4
-    # output: /mnt/D/Code/DeOldify/input3_color.mp4
+    # input: /mnt/D/Code/DeOldify/input3_10fps.mp4;/mnt/D/input3_10fps (copy).mp4
+    # output: /home/ly/Documents/output1.mp4;/mnt/D/output2.mp4
+    moveVideoToPath("/mnt/D/Code/DeOldify/video/result/input3_10fps (copy).mp4", "/mnt/D/output2.mp4")

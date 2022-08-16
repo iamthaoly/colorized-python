@@ -94,8 +94,8 @@ def testParser():
 
 if __name__ == "__main__":
     # main()
-    # testParser()
+    testParser()
     # Arguments: [Input], [Output], Render factor.
     # input: /mnt/D/Code/DeOldify/input3_10fps.mp4;/mnt/D/input3_10fps (copy).mp4
     # output: /home/ly/Documents/output1.mp4;/mnt/D/output2.mp4
-    moveVideoToPath("/mnt/D/Code/DeOldify/video/result/input3_10fps (copy).mp4", "/mnt/D/output2.mp4")
+    # moveVideoToPath("/mnt/D/Code/DeOldify/video/result/input3_10fps (copy).mp4", "/mnt/D/output2.mp4")

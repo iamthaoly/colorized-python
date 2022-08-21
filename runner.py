@@ -65,13 +65,17 @@ def main():
 def testParser():
     DELIMETER = ";"
     parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--input", help = "Array of output path")
     parser.add_argument("-o", "--output", help = "Array of input path")
     parser.add_argument("-r", "--render", help = "Render factor")
-    parser.add_argument("-i", "--input", help = "Array of output path")
 
     # Read arguments from command line
     args = parser.parse_args()
     
+    print("Raw input: % s" % args.input)
+    print("Raw output: % s" % args.output)
+    print("Render number: % s" % args.render)
+
     if args.output and args.input and args.render:
         print("Raw input: % s" % args.input)
         print("Raw output: % s" % args.output)
@@ -93,7 +97,7 @@ def testParser():
         print("ERROR: Some arguments are empty. Please check again.")
 
 if __name__ == "__main__":
-    # main()
+    # main() 
     testParser()
     # Arguments: [Input], [Output], Render factor.
     # input: /mnt/D/Code/DeOldify/input3_10fps.mp4;/mnt/D/input3_10fps (copy).mp4

@@ -294,7 +294,7 @@ class VideoColorizer:
 
         for img in progress_bar(os.listdir(str(bwframes_folder))):
             img_path = bwframes_folder / img
-
+            # print(progress_bar.fill)
             if os.path.isfile(str(img_path)):
                 color_image = self.vis.get_transformed_image(
                     str(img_path), render_factor=render_factor, post_process=post_process,watermarked=watermarked

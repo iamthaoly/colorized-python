@@ -1,0 +1,5 @@
+{
+    "input_video": "/mnt/D/Code/DeOldify/input3_10fps.mp4",
+    "output_video": "/home/ly/Documents/output1.mp4",
+    "render_factor": 21
+}

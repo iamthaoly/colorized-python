@@ -14,8 +14,16 @@ import argparse
 def setupGPU():
     # choices:  CPU, GPU0...GPU7
     device.set(device=DeviceId.GPU0)
+
+    if torch.backends.mps.is_available():
+        print("M1 GPU available.")
+    else:
+        print("M1 GPU not available.")
+        
     if not torch.cuda.is_available():
-        print('GPU not available.')
+        print('NVIDIA GPU not available.')
+    else:
+        print('NVIDIA GPU available')
 
 def setupTorch():
     torch.backends.cudnn.benchmark=True
@@ -40,6 +48,10 @@ def moveVideoToPath(init_path, output_path):
     print("Done move %s to %s" % (init_path, output_path))
 
 def startColorize(input_paths, output_paths, render_factor=21):
+    os.system("pwd")
+    setupGPU()
+    setupTorch()
+
     colorizer = get_video_colorizer()
     print()
     # render_factor = 21  

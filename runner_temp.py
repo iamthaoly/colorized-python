@@ -6,7 +6,8 @@ from runner import startColorize
 input = ""
 output = ""
 render = ""
-json_path = "userVideo.json"
+# TODO: Change json_path
+json_path = "userVideo.txt"
 
 print("Start reading json file...")
 with open(json_path) as f:

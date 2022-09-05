@@ -10,6 +10,7 @@ from deoldify.visualize import *
 from pathlib import Path
 import warnings
 import argparse
+import ssl
 
 def setupGPU():
     # choices:  CPU, GPU0...GPU7
@@ -48,6 +49,7 @@ def moveVideoToPath(init_path, output_path):
     print("Done move %s to %s" % (init_path, output_path))
 
 def startColorize(input_paths, output_paths, render_factor=21):
+    ssl._create_default_https_context = ssl._create_unverified_context
     os.system("pwd")
     setupGPU()
     setupTorch()
@@ -66,13 +68,13 @@ def startColorize(input_paths, output_paths, render_factor=21):
             print(video_path)
             moveVideoToPath(video_path, output_path)
 
-def main():
-    print("main")
-    os.system("pwd")
-    setupGPU()
-    setupTorch()
-    downloadAndSetupModels()
-    startColorize("input3.mp4")
+# def main():
+#     print("main")
+#     os.system("pwd")
+#     setupGPU()
+#     setupTorch()
+#     downloadAndSetupModels()
+#     startColorize("input3.mp4")
 
 def testParser():
     DELIMETER = ";"

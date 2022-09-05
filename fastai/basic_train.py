@@ -178,6 +178,8 @@ class Learner():
 
     def _test_writeable_path(self):
         path = self.path/self.model_dir
+        print("Test writable path: ")
+        print(path)
         try:
             path.mkdir(parents=True, exist_ok=True)
             tmp_file = get_tmp_file(path)

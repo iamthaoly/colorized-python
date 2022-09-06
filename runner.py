@@ -15,7 +15,8 @@ import ssl
 def setupGPU():
     # choices:  CPU, GPU0...GPU7
     device.set(device=DeviceId.GPU0)
-
+    print("-------------------------")
+    print("Checking GPU...")
     if torch.backends.mps.is_available():
         print("M1 GPU available.")
     else:
@@ -25,6 +26,8 @@ def setupGPU():
         print('NVIDIA GPU not available.')
     else:
         print('NVIDIA GPU available')
+
+    print("-------------------------")
 
 def setupTorch():
     torch.backends.cudnn.benchmark=True

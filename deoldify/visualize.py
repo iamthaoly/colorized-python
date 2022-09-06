@@ -15,6 +15,7 @@ import base64
 # from IPython.display import Image as ipythonimage
 import cv2
 import logging
+from config import ROOT_DIR
 
 # adapted from https://www.pyimagesearch.com/2016/04/25/watermarking-images-with-opencv-and-python/
 def get_watermarked(pil_image: Image) -> Image:
@@ -408,7 +409,9 @@ class VideoColorizer:
 
 
 def get_video_colorizer(render_factor: int = 21) -> VideoColorizer:
-    return get_stable_video_colorizer(render_factor=render_factor)
+    # return get_stable_video_colorizer(render_factor=render_factor)
+    return get_stable_video_colorizer(render_factor=render_factor, root_folder=Path(ROOT_DIR))
+
 
 
 def get_artistic_video_colorizer(

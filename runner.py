@@ -63,7 +63,7 @@ def startColorize(input_paths, output_paths, render_factor=21):
         if input_path is not None and input_path != '':
             print("Colorizing video at path: %s" % input_path)
             print()
-            video_path = colorizer._colorize_from_path(Path(input_path), render_factor)
+            video_path = colorizer._colorize_from_path(Path(input_path), render_factor, watermarked=False)
             print("Video path after colorized ->")
             print(video_path)
             moveVideoToPath(video_path, output_path)

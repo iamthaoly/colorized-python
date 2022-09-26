@@ -352,7 +352,7 @@ class VideoColorizer:
             audio_file.unlink()
 
         os.system(
-            'ffmpeg -y -i "'
+            '/usr/local/bin/ffmpeg -y -i "'
             + str(source_path)
             + '" -vn -acodec copy "'
             + str(audio_file)
@@ -364,7 +364,7 @@ class VideoColorizer:
 
         if audio_file.exists():
             os.system(
-                'ffmpeg -y -i "'
+                '/usr/local/bin/ffmpeg -y -i "'
                 + str(colorized_path)
                 + '" -i "'
                 + str(audio_file)

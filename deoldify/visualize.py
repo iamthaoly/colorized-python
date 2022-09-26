@@ -16,6 +16,7 @@ import base64
 import cv2
 import logging
 from config import ROOT_DIR
+import os
 
 # adapted from https://www.pyimagesearch.com/2016/04/25/watermarking-images-with-opencv-and-python/
 def get_watermarked(pil_image: Image) -> Image:
@@ -47,6 +48,9 @@ def get_watermarked(pil_image: Image) -> Image:
 
 class ModelImageVisualizer:
     def __init__(self, filter: IFilter, results_dir: str = None):
+        # Change working directory
+        os.chdir(ROOT_DIR)
+        print("Current dir ->", os.getcwd())
         self.filter = filter
         self.results_dir = None if results_dir is None else Path(results_dir)
         self.results_dir.mkdir(parents=True, exist_ok=True)
@@ -226,7 +230,7 @@ class VideoColorizer:
 
     def _get_ffmpeg_probe(self, path:Path):
         try:
-            probe = ffmpeg.probe(str(path))
+            probe = ffmpeg.probe(str(path), cmd='usr/local/bin/ffprobe')
             return probe
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
@@ -238,7 +242,10 @@ class VideoColorizer:
             raise e
 
     def _get_fps(self, source_path: Path) -> str:
-        probe = self._get_ffmpeg_probe(source_path)
+        try:
+            probe = self._get_ffmpeg_probe(source_path)
+        except:
+            print()
         stream_data = next(
             (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
             None,
@@ -274,7 +281,7 @@ class VideoColorizer:
         )
 
         try:
-            process.run()
+            process.run(cmd='usr/local/bin/ffmpeg')
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
             logging.error('stdout:' + e.stdout.decode('UTF-8'))
@@ -323,7 +330,7 @@ class VideoColorizer:
         )
 
         try:
-            process.run()
+            process.run(cmd='/usr/local/bin/ffmpeg')
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
             logging.error('stdout:' + e.stdout.decode('UTF-8'))

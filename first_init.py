@@ -50,6 +50,8 @@ def runFirstTime():
     os.system("pwd")
     setupGPU()
     setupTorch()
+    print("---------------------")
+    print("Initialing AI...")
     temp = get_video_colorizer()
 
 if __name__ == "__main__":

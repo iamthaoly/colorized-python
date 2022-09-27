@@ -17,6 +17,7 @@ import cv2
 import logging
 from config import ROOT_DIR
 import os
+import sys
 
 # adapted from https://www.pyimagesearch.com/2016/04/25/watermarking-images-with-opencv-and-python/
 def get_watermarked(pil_image: Image) -> Image:
@@ -230,7 +231,7 @@ class VideoColorizer:
 
     def _get_ffmpeg_probe(self, path:Path):
         try:
-            probe = ffmpeg.probe(str(path), cmd='usr/local/bin/ffprobe')
+            probe = ffmpeg.probe(str(path), cmd='/usr/local/bin/ffprobe')
             return probe
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
@@ -244,8 +245,9 @@ class VideoColorizer:
     def _get_fps(self, source_path: Path) -> str:
         try:
             probe = self._get_ffmpeg_probe(source_path)
-        except:
-            print()
+        except Exception as e:
+            print('ERROR FPS:')
+            print(e)
         stream_data = next(
             (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
             None,
@@ -281,7 +283,7 @@ class VideoColorizer:
         )
 
         try:
-            process.run(cmd='usr/local/bin/ffmpeg')
+            process.run(cmd='/usr/local/bin/ffmpeg')
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
             logging.error('stdout:' + e.stdout.decode('UTF-8'))

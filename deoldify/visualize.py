@@ -231,7 +231,7 @@ class VideoColorizer:
 
     def _get_ffmpeg_probe(self, path:Path):
         try:
-            probe = ffmpeg.probe(str(path), cmd='/usr/local/bin/ffprobe')
+            probe = ffmpeg.probe(str(path))
             return probe
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
@@ -283,7 +283,7 @@ class VideoColorizer:
         )
 
         try:
-            process.run(cmd='/usr/local/bin/ffmpeg')
+            process.run()
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
             logging.error('stdout:' + e.stdout.decode('UTF-8'))
@@ -332,7 +332,7 @@ class VideoColorizer:
         )
 
         try:
-            process.run(cmd='/usr/local/bin/ffmpeg')
+            process.run()
         except ffmpeg.Error as e:
             logging.error("ffmpeg error: {0}".format(e), exc_info=True)
             logging.error('stdout:' + e.stdout.decode('UTF-8'))
@@ -354,7 +354,7 @@ class VideoColorizer:
             audio_file.unlink()
 
         os.system(
-            '/usr/local/bin/ffmpeg -y -i "'
+            'ffmpeg -y -i "'
             + str(source_path)
             + '" -vn -acodec copy "'
             + str(audio_file)
@@ -366,7 +366,7 @@ class VideoColorizer:
 
         if audio_file.exists():
             os.system(
-                '/usr/local/bin/ffmpeg -y -i "'
+                'ffmpeg -y -i "'
                 + str(colorized_path)
                 + '" -i "'
                 + str(audio_file)
